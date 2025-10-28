@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "Travel Native App",
+    "slug": "travel-native-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "jsEngine": "hermes"
+  }
+}
