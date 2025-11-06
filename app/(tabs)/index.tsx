@@ -5,7 +5,28 @@ import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { ExternalLink } from '@/components/external-link';
+
+const paymentMethods = [
+  {
+    name: 'PayPal',
+    description:
+      'Enable fast, trusted checkout experiences with PayPal balance, cards, and Pay Later options.',
+    url: 'https://www.paypal.com/us/business/platforms-and-marketplaces',
+  },
+  {
+    name: 'Apple Pay',
+    description:
+      'Offer a one-tap payment flow for iOS travelers that keeps their card details securely stored in Wallet.',
+    url: 'https://developer.apple.com/apple-pay/',
+  },
+  {
+    name: 'Google Pay',
+    description:
+      'Reach Android users globally with tokenized payments that autofill traveler details.',
+    url: 'https://developers.google.com/pay/api',
+  },
+];
 
 export default function HomeScreen() {
   return (
@@ -18,61 +39,46 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Plan Your Next Journey</ThemedText>
         <HelloWave />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
+      <ThemedView style={styles.heroCard}>
+        <ThemedText type="subtitle">Tailored travel experiences</ThemedText>
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
+          Craft curated itineraries, highlight hidden gems, and keep travelers inspired with
+          beautiful storytelling. This home screen now spotlights the key booking flows for your
+          agency.
+        </ThemedText>
+        <ThemedText style={styles.heroFootnote}>
+          {`Use ${Platform.select({ ios: 'Cmd + D', android: 'Cmd + M', web: 'F12' })} to access
+          developer tools while refining the experience.`}
         </ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
+      <ThemedView style={styles.section}>
+        <ThemedText type="subtitle">Flexible online payments</ThemedText>
+        <ThemedText style={styles.sectionDescription}>
+          Let guests pay the way they prefer. Combine digital wallets with traditional cards to
+          remove friction at checkout and boost conversion.
         </ThemedText>
+        {paymentMethods.map((method) => (
+          <ThemedView key={method.name} style={styles.paymentCard}>
+            <ThemedText style={styles.paymentName}>{method.name}</ThemedText>
+            <ThemedText style={styles.paymentDescription}>{method.description}</ThemedText>
+            <ExternalLink href={method.url}>
+              <ThemedText type="link">Learn more about {method.name}</ThemedText>
+            </ExternalLink>
+          </ThemedView>
+        ))}
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+      <ThemedView style={styles.section}>
+        <ThemedText type="subtitle">Offer bookings on TripAdvisor</ThemedText>
+        <ThemedText style={styles.sectionDescription}>
+          Already manage your tours on TripAdvisor? Send travelers directly to your listings so they
+          can reserve with confidence using a familiar marketplace.
         </ThemedText>
+        <ExternalLink href="https://www.tripadvisor.com/TravelersChoice">
+          <ThemedText style={styles.tripAdvisorLink}>Book your tour on TripAdvisor</ThemedText>
+        </ExternalLink>
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -84,9 +90,45 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  stepContainer: {
+  heroCard: {
+    gap: 12,
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 16,
+    backgroundColor: 'rgba(255,255,255,0.65)',
+  },
+  heroFootnote: {
+    fontSize: 14,
+    opacity: 0.7,
+  },
+  section: {
+    gap: 12,
+    marginBottom: 18,
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0,0,0,0.04)',
+  },
+  sectionDescription: {
+    opacity: 0.85,
+  },
+  paymentCard: {
     gap: 8,
-    marginBottom: 8,
+    padding: 16,
+    borderRadius: 14,
+    backgroundColor: 'rgba(161, 206, 220, 0.25)',
+  },
+  paymentName: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  paymentDescription: {
+    opacity: 0.85,
+  },
+  tripAdvisorLink: {
+    marginTop: 4,
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#34A853',
   },
   reactLogo: {
     height: 178,
